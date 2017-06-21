@@ -1,2 +1,3 @@
-# nathanaccidentally.github.io
-My website and Cydia repository.
+# nathans site!
+
+This is my personal website as well as my Cydia repository. 🐙🐈
