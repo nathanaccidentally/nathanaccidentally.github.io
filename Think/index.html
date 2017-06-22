@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Think</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="clock.png">
+	
+	<script>
+	   if (!("Notification" in window)) {
+       alert("Sorry, but your browser may not support the Notifications API. Please try updating your browser or switching to a different one.");
+        } else {
+  	   console.log("Setting notifications.")
+     }
+
+  // We need to have the time in here lol
+
+	function startThink() {
+		setTime = 'null'; // Need to set this to avoid errors.
+
+		permission = Notification.permission;
+
+		document.getElementById("mainInput").style.display = 'none';
+		document.getElementById("mainInputClass").style.display = 'none';
+		document.getElementById("mainHeader").style.display = 'none';
+		document.getElementById("postButton").style.display = 'none';
+		document.getElementById("timeInputClass").style.display = 'none';
+		document.getElementById("timeInput").style.display = 'none';
+		
+		if (permission === "granted") { // I check if we have permission to avoid errors for people who already accept.
+				console.log("Permissions have been granted. Posting notification.");
+				new Notification('Welcome!', { body: "Welcome to Think. Just type your reminder, set a time, and we'll send you a notification when you need to feed your pup.", icon: 'clock.png',});
+
+				// Great, now we can hide what's already on the page. (The warning I set)
+
+				hideStartScreen();
+
+			}
+
+		if (permission == "default" || permission == "denied") {
+			console.log('%c Notification permission not granted. ', 'color: red;');
+
+			// Now for getting notification permissions.
+
+			Notification.requestPermission().then(function(permission) { console.log(permission); // Great, now we have notification access! (Hopefully lol)
+
+			// Now we need to check if we have permissions.
+
+			 if (permission == "denied") {
+				window.alert("Think cannot send notifications without permission.") // Fallback
+			}
+		})
+	}
+}
+
+             function postReminder() { // This handles putting the reminder box into a variable. (And also some happy text changing and stuff.)
+
+             	reminder = document.getElementById("mainInput").value;
+             	setTime = document.getElementById("timeInput").value;
+             	notif = new Notification("OK, at " + setTime + " I'll remind you to " + reminder);
+             	randomBottomBarGoodness();
+             	console.log(notif);
+             	console.log('%c Check the notification push above to see result posted to notification ', 'color: red;');
+
+             	// Now we need to alert the checkTime() function to check when to fire notification.
+             	pushed = "false";
+             	checkTime();
+		     
+		        document.getElementById("mainInput").value = "";
+		        document.getElementById("timeInput").value = "";
+		        document.getElementById("mainInput").placeholder = "Reminder already set.";
+             }
+
+              function checkTime() {
+              	loop = setTimeout(checkTime, 2000) // Need to fire this frequently to check.
+              	time = new Date().toLocaleTimeString('en-US', { hour12: true, hour: "numeric", minute: "numeric"});
+             	if (time == setTime) {
+             		if (pushed == "true") {
+             			console.log("Already pushed.");
+				
+			             document.getElementById("mainInput").value = "";
+		                 document.getElementById("timeInput").value = "";
+		                 document.getElementById("mainInput").placeholder = "What should I remind you?";
+		                 clearTimeout(loop);
+             		} else {
+             		    new Notification('Reminder for ' + time, { body: reminder, icon: 'clock.png',});
+             		    console.log('%c Notification pushed! ', 'color: orange;')
+             		    pushed = "true";
+             	 }
+            }
+        }
+
+         function hideStartScreen() { // Darn Safari won't run the above code automagically so I need to do it manually.
+				document.getElementById("introText").style.display = 'none';
+				document.getElementById("introSubText").style.display = 'none';
+
+				// Great, the welcome/warning is hidden Now I'll add the input.
+
+				document.getElementById("mainInput").style.display = 'block';
+				document.getElementById("mainInputClass").style.display = 'block';
+				document.getElementById("mainHeader").style.display = 'block';
+				document.getElementById("postButton").style.display = 'block';
+				document.getElementById("timeInputClass").style.display = 'block';
+		        document.getElementById("timeInput").style.display = 'block';
+         }
+	</script>
+
+	<script>
+
+	// This handles using the enter button to set notificaiton.
+
+	document.documentElement.addEventListener("keydown", pushReminder);
+
+	function pushReminder() {
+
+		if (event.keyCode == 13) {
+		console.log('%c You pressed enter! Now I will try to push a reminder. ', 'color: green;');
+		postReminder();
+
+		// Fun and fun.
+	}
+}
+
+	function randomBottomBarGoodness() {
+		        var bottomBarGoodness = ['did you know: I only allow one reminder at a time because I am lazy?', 'tip: use think frequently', 'tip: sad is for the weak', 'life tip: sleep is for the weak', 'did you know: the code that handles this is the best code on this site', 'tip: enabling notifications is bad'];
+	            var randomStringForBottomBar = Math.floor(Math.random()*bottomBarGoodness.length); // Why? For fun!
+	            document.getElementById("bottomBar").innerHTML = bottomBarGoodness[randomStringForBottomBar];
+	}
+	</script>
+</head>
+
+<body onload="startThink()">
+
+<div class="introText">
+<h1 id="introText">Hi There.</h1>
+<h2 id="introSubText">Please allow notifications.</h2>
+</div>
+
+<div class="mainHeader" id="mainHeader">
+	<h1>Think</h1>
+	<h2>A fast reminder system for the web.</h2>
+</div>
+
+<div class="mainInput" id="mainInputClass">
+<input id="mainInput" type="text" placeholder="What should I remind you?">
+</div>
+
+<div id="timeInputClass" class="timeInput">
+<input id="timeInput" type="text" placeholder="When?">
+</div>
+
+<div class="postInput">
+<button id="postButton" onclick="postReminder()">Place Reminder!</button>
+</div>
+
+<div class="loveBless">
+<p id="bottomBar">made by nathanaccidentally</p>
+</div>
+
+</body>
+</html>
