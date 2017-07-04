@@ -1,5 +1,5 @@
 body {
-	overflow-y: scroll;
+	overflow: hidden;
 	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -81,12 +81,28 @@ a {
 	width: 90%;
 }
 
-.footer {
-	text-align: center;
+/* now for social icons */
+
+.twitterlogo {
+	position: fixed;
+	bottom: 0px;
 	padding-top: 5%;
-	margin: auto;
-	font-weight: bold;
-	color: white;
+	padding-bottom: 10px;
+	left: 38%;
 }
 
-/* this was copied from the main page so some stuff is un-utilized. */
+.githublogo {
+	position: fixed;
+	bottom: 0px;
+	padding-top: 5%;
+	padding-bottom: 10px;
+	left: 48%;
+}
+
+.redditlogo {
+	position: fixed;
+	bottom: 0px;
+	padding-top: 5%;
+	padding-bottom: 10px;
+	left: 58%;
+}
