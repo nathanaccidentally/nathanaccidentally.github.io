@@ -47,44 +47,9 @@ body {
 	}
 }
 
-/* because boxes are links */
-
-a {
-	text-decoration: none;
-	color: black;
-}
-
-/* done with my site title, time for some stuff. */
-
-.box {
-	border-radius: 13px;
-	display: block;
-	margin: auto;
-	background-color: white;
-	opacity: .9;
-	width: 90%;
-	height: 130px;
-}
-
-/* be sweet and deal with my css */
-
-.box h1 {
-	font-size: 24px;
-	font-weight: bold;
-	margin-left: 5%;
-	padding-top: 4%;
-}
-
-.box p {
-	font-size: 12px;
-	margin-left: 5%;
-	width: 90%;
-}
-
 .footer {
 	text-align: center;
-	display: block;
-	padding-top: 4%;
+	padding-top: 5%;
 	margin: auto;
 	font-weight: bold;
 	color: white;
