@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GarlicTrader</title>
+		<link rel="stylesheet" href="resc/style.css">
+		<link rel="icon" href="images/logo.png">
+
+		<script>
+			// Time to start the price watch.
+
+			var tradeSatoshiApi = "https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
+
+			fetch(tradeSatoshiApi) // Calling for the price count from TradeSatoshi.
+			.then(function() {
+				console.log('%c Was able to reach TradeSatoshi API ', 'color: green;');
+			})
+			.catch(function() {
+				console.log('%c Error! Could not reach TradeSatoshi. ', 'color: red;');
+			})
+		</script>
+	</head>
+
+	<body>
+		<!-- The actual interface. Probably alredy knew that. -->
+
+		<img src="images/logo.png" class="garlicHeader" width="190px" height="190Spx">
+
+		<h1 class="garlicPrice">Current price = ~$1.7/GRLC</h1>
+	</body>
+</html>
