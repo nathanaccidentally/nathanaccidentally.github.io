@@ -6,25 +6,77 @@
 		<link rel="icon" href="images/logo.png">
 
 		<script>
-			// Time to start the price watch.
+			// Here is where I will set up all API's I need.
 
-			var tradeSatoshiApi = "https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
+			var satoshiPrice;
+			var bitcoinFloat;
+			var priceInUSD;
 
-			fetch(tradeSatoshiApi) // Calling for the price count from TradeSatoshi.
-			.then(function() {
-				console.log('%c Was able to reach TradeSatoshi API ', 'color: green;');
-			})
-			.catch(function() {
+			const tradeSatoshiApi = "https://cors.io/?https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
+			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
+
+			fetch(tradeSatoshiApi, {
+				method: 'get'
+			}).then(function(satoshiResponse) {
+				console.log('%c Was able to reach TradeSatoshi API ', 'color: green;') // Able to connect to Satoshi.
+
+				// I am now going to get a response in JSON and work with it.
+
+				return satoshiResponse.json(); // This is all this handles. Now for the next part.
+			}).then(function(satoshiResponseJSON) {
+				// Now our JSON response is a JS object. Now I can mess with it and set it's values.
+				console.log(satoshiResponseJSON); // Log it.
+				var stringSatoshiJSON = JSON.stringify(satoshiResponseJSON);
+				console.log(stringSatoshiJSON);
+
+				// For some reason I can't get stuff from this JSON array so I have to do it manually lol.
+
+				var isolatedStringSetOne = stringSatoshiJSON.slice(stringSatoshiJSON.indexOf('price":') + 'price":'.length); // Isolate part of our string.
+				
+				satoshiPrice = isolatedStringSetOne.split(',')[0]
+				console.log(satoshiPrice);
+
+				// Yay! Price is now done.
+
+			}).catch(function() {
 				console.log('%c Error! Could not reach TradeSatoshi. ', 'color: red;');
+
+				document.getElementById("garlicPrice").innerHTML = "Internal error. Please reload.";
 			})
+
+			// Time to get a conversion from BTC to USD.
+
+			fetch(coindeskApi, {
+				method: 'get'
+			}).then(function(coindeskResponse) {
+				console.log('%c Was able to reach Coindesk API ', 'color: green;')
+
+				return coindeskResponse.json();
+
+				setTimeout(coindeskResponseJSON)
+			}).then(function(coindeskResponseJSON) {
+				// Setting our variables,
+
+				bitcoinFloat = coindeskResponseJSON.bpi.USD.rate_float;
+				console.log("Current BTC price = " + bitcoinFloat + ".");
+			})
+
+			function setPrices() {
+				setTimeout(function() {
+					var priceInUSD = satoshiPrice * bitcoinFloat;
+					console.log(priceInUSD);
+
+					document.getElementById("garlicPrice").innerHTML = "Current price = ~$" + priceInUSD + "per coin.";
+				}, 2000)
+			}
 		</script>
 	</head>
 
-	<body>
+	<body onload="setPrices()">
 		<!-- The actual interface. Probably alredy knew that. -->
 
 		<img src="images/logo.png" class="garlicHeader" width="190px" height="190Spx">
 
-		<h1 class="garlicPrice">Current price = ~$1.7/GRLC</h1>
+		<h1 id="garlicPrice" class="garlicPrice"></h1>
 	</body>
 </html>
