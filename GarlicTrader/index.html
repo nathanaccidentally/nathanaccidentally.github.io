@@ -98,6 +98,14 @@
 					document.getElementById("bankBalance").innerHTML = "Internal error. Please refresh.";
 				})
 			}
+
+			function buyClicked() {
+				console.log('%c The buy button was clicked. Could not generate recipt. ', 'color: red;')
+			}
+
+			function sellClicked() {
+				console.log('%c The sell button was clicked. Could not generate recipt. ', 'color: red;')
+			}
 		</script>
 	</head>
 
@@ -108,5 +116,40 @@
 
 		<h1 id="garlicPrice" class="garlicPrice">Getting current trading value...</h1>
 		<h3 id="bankBalance" class="bankBalance">Gathering store balance...</h3>
+
+		<div class="sellArea">
+			<h2>Sell</h2>
+			<p>Read the sellers terms before selling!</p>
+
+			<!-- Form Stuff! -->
+
+			<h3>Ammount Sent:</h3>
+			<input type="text" name="ammountSent" placeholder="Ammount Sent">
+
+			<h3>Transaction ID:</h3>
+			<input type="text" name="txid" placeholder="TX ID">
+
+			<h3>Paypal Address:</h3>
+			<input type="text" name="paypalAddress" placeholder="Paypal Address">
+
+			<button type="submit" onclick="sellClicked()">Sell Coins</button>
+		</div>
+		<div class="buyArea">
+			<h2>Buy</h2>
+			<p>Check the bank before buying!</p>
+
+			<!-- Form Stuff! -->
+
+			<h3>Ammount Wanted:</h3>
+			<input type="text" name="ammountWanted" placeholder="Ammount Wanted">
+
+			<h3>Wallet Address:</h3>
+			<input type="text" name="wantedAddress" placeholder="Wallet Address">
+
+			<h3>Paypal Address:</h3>
+			<input type="text" name="paypalAddressBuy" placeholder="Paypal Address">
+
+			<button type="submit" onclick="buyClicked()">Buy Coins</button>
+		</div>
 	</body>
 </html>

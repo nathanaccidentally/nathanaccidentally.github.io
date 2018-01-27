@@ -20,6 +20,59 @@ body {
 .bankBalance {
 	position: absolute;
 	top: 35%;
-	left: 50%;
+	left: 45.5%;
 	transform: translate(-50%, -50%);
+}
+
+.sellArea {
+	position: absolute;
+	top: 65%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	height: 400px;
+	border: 2.5px solid grey;
+	border-radius: 20px;
+}
+
+.buyArea {
+	position: absolute;
+	top: 65%;
+	left: 70%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	height: 400px;
+	border: 2.5px solid grey;
+	border-radius: 20px;
+}
+
+h2 {
+	text-align: center;
+	vertical-align: middle;
+ 	line-height: 25px;
+ 	font-size: 20px;
+}
+
+p {
+	font-size: 12px;
+	text-align: center;
+	vertical-align: middle;
+ 	line-height: 0.5px;
+}
+
+h3 {
+	font-size: 15px;
+	padding-top: 5%;
+	padding-left: 8%;
+}
+
+input {
+	margin-left: 25px;
+	height: 25px;
+	width: 235px;
+}
+
+button {
+	margin-left: 110px;
+	margin-top: 5%;
 }
