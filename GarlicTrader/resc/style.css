@@ -76,3 +76,15 @@ button {
 	margin-left: 110px;
 	margin-top: 5%;
 }
+
+/* Footer stuff stolen from a CodePen by cbracco. */
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}

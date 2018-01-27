@@ -12,10 +12,12 @@
 			var bitcoinFloat;
 			var priceInUSD;
 			var bankBalance;
+			var transaction;
 
 			const tradeSatoshiApi = "https://cors.io/?https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
 			const currentBankBalance = "https://cors.io/?http://explorer.grlc-bakery.fun/ext/getbalance/Gdhuz25VxxA5uLjF9S8u62KN4Gt8HjjcAs";
+			const checkTransactionID = "https://cors.io/?https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
 			fetch(tradeSatoshiApi, {
 				method: 'get'
@@ -100,11 +102,55 @@
 			}
 
 			function buyClicked() {
-				console.log('%c The buy button was clicked. Could not generate recipt. ', 'color: red;')
+				console.log('%c The buy button was clicked. Could not generate receipt. ', 'color: red;')
 			}
 
 			function sellClicked() {
-				console.log('%c The sell button was clicked. Could not generate recipt. ', 'color: red;')
+				console.log('%c The sell button was clicked. Generating receipt. ', 'color: red;')
+				document.getElementById("sellLogo").innerHTML = "Verifying info with blockchain...";
+
+				var coinAmmountSent = document.getElementById("coinAmmountSent").value;
+				var transactionID = document.getElementById("transactionID").value;
+				var paypalAddress = document.getElementById("paypalAddressSell").value;
+
+				// Making sure ammount sent is a number.
+
+				if (isNaN(coinAmmountSent)) {
+					alert("You must have a number for coin ammount sent.");
+					console.log('%c Was not able to properly generate receipt. ', 'color: red;')
+				} else {
+					console.log('%c Was able to properly generate receipt using the coin ammount sent. Continuing checks. ', 'color: green;')
+				}
+
+				// Now it's time to get info from the transaction. This will be included in the receipt.
+
+				fetch(checkTransactionID + transactionID + "&decrypt=1", {
+					method: 'get'
+				}).then(function(checkingTransactionID) {
+					console.log('%c Checking transaction ID! ', 'color: red;');
+
+					return checkingTransactionID.json();
+				}).then(function(checkingTransactionToExplorer) {
+					transaction = checkingTransactionToExplorer;
+					console.log(transaction);
+
+					console.log("Above is the raw transaction info.");
+
+					if (transaction.vout[0].value != coinAmmountSent) {
+						console.log(transaction.vout[0].value + " != " + coinAmmountSent);
+						alert("Transaction failed! Transaction does not match ammount sent.");
+						console.log('%c Oh no! transactionID did NOT match the ammount sent. ', 'color: red;');
+					} else {
+						console.log('%c Yes! Was able to veryify transaction with the blockchain. ', 'color: green;');
+					}
+				}).catch(function(errorInBlockchain) {
+					console.log('%c Oh no! Either the blockchain or the explorer is not working. ', 'color: red;');
+					alert("Error in the blockchain. Please wait a minute.");
+				})
+
+				document.getElementById("sellLogo").innerHTML = "Done! Blockchain verification done...";
+				document.getElementById("sellLogo").innerHTML = "Invoicing store PayPal...";
+
 			}
 		</script>
 	</head>
@@ -119,18 +165,18 @@
 
 		<div class="sellArea">
 			<h2>Sell</h2>
-			<p>Read the sellers terms before selling!</p>
+			<p id="sellLogo">Read the sellers terms before selling!</p>
 
 			<!-- Form Stuff! -->
 
 			<h3>Ammount Sent:</h3>
-			<input type="text" name="ammountSent" placeholder="Ammount Sent">
+			<input id="coinAmmountSent" type="text" name="ammountSent" placeholder="Ammount Sent">
 
 			<h3>Transaction ID:</h3>
-			<input type="text" name="txid" placeholder="TX ID">
+			<input id="transactionID" type="text" name="txid" placeholder="TX ID">
 
 			<h3>Paypal Address:</h3>
-			<input type="text" name="paypalAddress" placeholder="Paypal Address">
+			<input id="paypalAddressSell" type="text" name="paypalAddress" placeholder="Paypal Address">
 
 			<button type="submit" onclick="sellClicked()">Sell Coins</button>
 		</div>
@@ -141,15 +187,21 @@
 			<!-- Form Stuff! -->
 
 			<h3>Ammount Wanted:</h3>
-			<input type="text" name="ammountWanted" placeholder="Ammount Wanted">
+			<input id="coinAmmountWanted" type="text" name="ammountWanted" placeholder="Ammount Wanted">
 
 			<h3>Wallet Address:</h3>
-			<input type="text" name="wantedAddress" placeholder="Wallet Address">
+			<input id="walletAddress" type="text" name="wantedAddress" placeholder="Wallet Address">
 
 			<h3>Paypal Address:</h3>
-			<input type="text" name="paypalAddressBuy" placeholder="Paypal Address">
+			<input id="paypalAddressBuy" type="text" name="paypalAddressBuy" placeholder="Paypal Address">
 
 			<button type="submit" onclick="buyClicked()">Buy Coins</button>
+		</div>
+
+		<!-- Footer time! -->
+
+		<div class="footer">bank: <strong>GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6</strong>
+			<p><b>GarlicTrader is currently in beta! Things may change!<b></p>
 		</div>
 	</body>
 </html>
