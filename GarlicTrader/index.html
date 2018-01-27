@@ -11,9 +11,11 @@
 			var satoshiPrice;
 			var bitcoinFloat;
 			var priceInUSD;
+			var bankBalance;
 
 			const tradeSatoshiApi = "https://cors.io/?https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
+			const currentBankBalance = "https://cors.io/?http://explorer.grlc-bakery.fun/ext/getbalance/Gdhuz25VxxA5uLjF9S8u62KN4Gt8HjjcAs";
 
 			fetch(tradeSatoshiApi, {
 				method: 'get'
@@ -62,12 +64,39 @@
 			})
 
 			function setPrices() {
+
+				// Set prices sets the BTC to USD price and also the bank prices.
+
 				setTimeout(function() {
 					var priceInUSD = satoshiPrice * bitcoinFloat;
-					console.log(priceInUSD);
+					console.log(priceInUSD + " per coin.");
 
+					priceInUSD = priceInUSD.toString(); // Because substring only works on strings.
+
+					priceInUSD = priceInUSD.substring(0,4);
 					document.getElementById("garlicPrice").innerHTML = "Current price = ~$" + priceInUSD + " per coin.";
 				}, 2000)
+
+				fetch(currentBankBalance, {
+					method: 'get'
+				}).then(function(gettingBankBalance) {
+					console.log('%c Was able to access the explorer. ', 'color: green;')
+
+					return gettingBankBalance.json();
+				}).then(function(bankBalaceResponse) {
+					// Set bank variables.
+
+					bankBalance = bankBalaceResponse;
+					console.log("Explorer says the bank has " + bankBalance + " coins.");
+
+					document.getElementById("bankBalance").innerHTML = "Current store balance: " + bankBalance + " coins";
+
+					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
+				}).catch(function(catchBankBalance) {
+					console.log('%c The Explorer API is not working. Please refresh or check API checkpoints. ', 'color: red;')
+
+					document.getElementById("bankBalance").innerHTML = "Internal error. Please refresh.";
+				})
 			}
 		</script>
 	</head>
@@ -77,6 +106,7 @@
 
 		<img src="images/logo.png" class="garlicHeader" width="190px" height="190Spx">
 
-		<h1 id="garlicPrice" class="garlicPrice"></h1>
+		<h1 id="garlicPrice" class="garlicPrice">Getting current trading value...</h1>
+		<h3 id="bankBalance" class="bankBalance">Gathering store balance...</h3>
 	</body>
 </html>
