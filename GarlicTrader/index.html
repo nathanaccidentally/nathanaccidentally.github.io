@@ -8,6 +8,12 @@
 
 		<script>
 
+			// First do the mobile device check. I will rework this later.
+
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				 alert("GarlicTrader does not work well on mobile devices!");
+			}
+
 			// Here is where I will set up all API's I need.
 
 			var satoshiPrice;
