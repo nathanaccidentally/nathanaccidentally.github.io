@@ -161,11 +161,11 @@
 						alert("Transaction failed! Transaction does not match amount sent.");
 						console.log('%c Oh no! transactionID did NOT match the amount sent. ', 'color: red;');
 
-						transaction = transaction.txid;
+						window.transaction = transaction.txid;
 					} else {
 						console.log('%c Yes! Was able to veryify transaction with the blockchain. ', 'color: green;');
 
-						transaction = transaction.txid;
+						window.transaction = transaction.txid;
 					}
 				}).catch(function(errorInBlockchain) {
 					console.log('%c Oh no! Either the blockchain or the explorer is not working. ', 'color: red;');
