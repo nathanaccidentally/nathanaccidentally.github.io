@@ -99,6 +99,15 @@
 
 					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
 					window.bankBalance = bankBalance; // global
+
+					if (bankBalance >= 5) {
+						console.log("Bank is overfilled. Please wait for buyers before selling.");
+						document.getElementById("footer").innerHTML = "Too many sellers! Please wait for more buyers!"; // To avoid too many sellers.
+
+						document.getElementById("sellButton").disabled = "true";
+					} else {
+						console.log("Seller pool is NOT full. You can sell! Yay!");
+					}
 				}).catch(function(catchBankBalance) {
 					console.log('%c The Explorer API is not working. Please refresh or check API checkpoints. ', 'color: red;')
 
@@ -216,7 +225,7 @@
 			<h3>Paypal Address:</h3>
 			<input id="paypalAddressSell" type="text" name="paypalAddress" placeholder="Paypal Address">
 
-			<button type="submit" onclick="sellClicked()">Sell Coins</button>
+			<button id="sellButton" type="submit" onclick="sellClicked()">Sell Coins</button>
 		</div>
 		<div class="buyArea">
 			<h2>Buy</h2>
@@ -238,7 +247,7 @@
 
 		<!-- Header/Footer time! -->
 
-		<div class="footer">bank: <strong>GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6</strong></div>
+		<div id="footer" class="footer">bank: <strong>GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6</strong></div>
 		<div class="notice info"><p id="innerAlert"><b>GarlicTrader is still in beta! Some things may not work. Please read <a href="https://gist.github.com/nathanaccidentally/937bc578045898f790636a2653db15d1">all terms</a> before trading. Buyers will be refunded if bank oversells. <a href="https://gist.github.com/nathanaccidentally/515ebf9167cce74da813e67be489cb12">Site helpers (thanks!)</a></b></p><br>
 
 		<p>Sellers, send the ammount to the bank below and fill out the sell form.</p>
