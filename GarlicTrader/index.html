@@ -133,6 +133,11 @@
 					console.log("That's too much.");
 					document.getElementById("innerAlert").innerHTML = "<font size=5 color=red><strong>Too many coins. Try taking some out.</strong></font>"
 					return;
+				} else if (coinAmountWanted < 0.1) {
+					console.log("Limit on coin buying! You must buy at least 0.1 coins.");
+					alert("You must buy more than 0.1 coins!");
+
+					return;
 				}
 
 				// Time to make the receipt
