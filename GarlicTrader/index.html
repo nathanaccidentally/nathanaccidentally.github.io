@@ -156,7 +156,7 @@
 
 					console.log("Above is the raw transaction info.");
 
-					if (transaction.vout[0].value != coinAmountSent) {
+					if (transaction.vout[0].value != coinAmountSent || transaction.vout[1].value != coinAmountSent) {
 						console.log(transaction.vout[0].value + " != " + coinAmountSent);
 						alert("Transaction failed! Transaction does not match amount sent.");
 						console.log('%c Oh no! transactionID did NOT match the amount sent. ', 'color: red;');
