@@ -3,6 +3,7 @@
 	<head>
 		<title>GarlicTrader</title>
 		<link rel="stylesheet" href="resc/style.css">
+		<link rel="stylesheet" href="resc/alert.css">
 		<link rel="icon" href="images/logo.png">
 
 		<script>
@@ -16,7 +17,7 @@
 
 			const tradeSatoshiApi = "https://cors.io/?https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
-			const currentBankBalance = "https://cors.io/?http://explorer.grlc-bakery.fun/ext/getbalance/Gdhuz25VxxA5uLjF9S8u62KN4Gt8HjjcAs";
+			const currentBankBalance = "https://cors.io/?http://explorer.grlc-bakery.fun/ext/getbalance/GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6";
 			const checkTransactionID = "https://cors.io/?https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
 			fetch(tradeSatoshiApi, {
@@ -77,6 +78,8 @@
 
 					priceInUSD = priceInUSD.substring(0,4);
 					document.getElementById("garlicPrice").innerHTML = "Current price = ~$" + priceInUSD + " per coin.";
+
+					window.priceInUSD = priceInUSD; //set globally
 				}, 2000)
 
 				fetch(currentBankBalance, {
@@ -94,6 +97,7 @@
 					document.getElementById("bankBalance").innerHTML = "Current store balance: " + bankBalance + " coins";
 
 					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
+					window.bankBalance = bankBalance; // global
 				}).catch(function(catchBankBalance) {
 					console.log('%c The Explorer API is not working. Please refresh or check API checkpoints. ', 'color: red;')
 
@@ -102,27 +106,43 @@
 			}
 
 			function buyClicked() {
-				console.log('%c The buy button was clicked. Could not generate receipt. ', 'color: red;')
+				console.log('%c The buy button was clicked. Trying to generate Receipt. ', 'color: red;')
+
+				var coinAmountWanted = document.getElementById("coinAmountWanted").value;
+				var walletAddress = document.getElementById("walletAddress").value;
+				var paypalAddress = document.getElementById("paypalAddressBuy").value;
+				var totalOwed = coinAmountWanted * priceInUSD;
+
+				if (coinAmountWanted > bankBalance) {
+					console.log("That's too much.");
+					document.getElementById("innerAlert").innerHTML = "<font size=5 color=red><strong>Too many coins. Try taking some out.</strong></font>"
+					return;
+				}
+
+				// Time to make the receipt
+
+				window.location.href = "mailto:tradergarlic@gmail.com?subject=Garlic%20Receipt%20From%20Buyer&body=Amount%20Wanted: " + coinAmountWanted + "%0AWallet%20Address: " + walletAddress + "%0ABuyer%20Paypal: " + paypalAddress + "%0ATotal%20Owed: $" + totalOwed + " (based on current trading value) %0A%0A------------------------------------------%0A%0AReceipt%20generated%20by%20GarlicTrader.%20Please%20do%20not%20change%20any%20information%20in%20this%20message%2C%20otherwise%20your%20sale%20will%20be%20invalid%20and%20we%20will%20keep%20your%20coins.%20Thank%20you."
+
 			}
 
 			function sellClicked() {
-				console.log('%c The sell button was clicked. Generating receipt. ', 'color: red;')
+				console.log('%c The sell button was clicked. Generating Receipt. ', 'color: red;')
 				document.getElementById("sellLogo").innerHTML = "Verifying info with blockchain...";
 
-				var coinAmmountSent = document.getElementById("coinAmmountSent").value;
+				var coinAmountSent = document.getElementById("coinAmountSent").value;
 				var transactionID = document.getElementById("transactionID").value;
 				var paypalAddress = document.getElementById("paypalAddressSell").value;
 
-				// Making sure ammount sent is a number.
+				// Making sure amount sent is a number.
 
-				if (isNaN(coinAmmountSent)) {
-					alert("You must have a number for coin ammount sent.");
-					console.log('%c Was not able to properly generate receipt. ', 'color: red;')
+				if (isNaN(coinAmountSent)) {
+					alert("You must have a number for coin amount sent.");
+					console.log('%c Was not able to properly generate Receipt. ', 'color: red;')
 				} else {
-					console.log('%c Was able to properly generate receipt using the coin ammount sent. Continuing checks. ', 'color: green;')
+					console.log('%c Was able to properly generate Receipt using the coin amount sent. Continuing checks. ', 'color: green;')
 				}
 
-				// Now it's time to get info from the transaction. This will be included in the receipt.
+				// Now it's time to get info from the transaction. This will be included in the Receipt.
 
 				fetch(checkTransactionID + transactionID + "&decrypt=1", {
 					method: 'get'
@@ -136,20 +156,31 @@
 
 					console.log("Above is the raw transaction info.");
 
-					if (transaction.vout[0].value != coinAmmountSent) {
-						console.log(transaction.vout[0].value + " != " + coinAmmountSent);
-						alert("Transaction failed! Transaction does not match ammount sent.");
-						console.log('%c Oh no! transactionID did NOT match the ammount sent. ', 'color: red;');
+					if (transaction.vout[0].value != coinAmountSent) {
+						console.log(transaction.vout[0].value + " != " + coinAmountSent);
+						alert("Transaction failed! Transaction does not match amount sent.");
+						console.log('%c Oh no! transactionID did NOT match the amount sent. ', 'color: red;');
 					} else {
 						console.log('%c Yes! Was able to veryify transaction with the blockchain. ', 'color: green;');
 					}
 				}).catch(function(errorInBlockchain) {
 					console.log('%c Oh no! Either the blockchain or the explorer is not working. ', 'color: red;');
-					alert("Error in the blockchain. Please wait a minute.");
+					document.getElementById("innerAlert").innerHTML = "<font size=5 color=red><strong>Error in Blockchain or Explorer. Please make sure your transaction ID is correct!</strong></font>"
+					return;
 				})
 
 				document.getElementById("sellLogo").innerHTML = "Done! Blockchain verification done...";
 				document.getElementById("sellLogo").innerHTML = "Invoicing store PayPal...";
+
+				// Now it's time to send our email.
+
+				priceInUSD = priceInUSD.substring(0,4);
+				var totalOwed = coinAmountSent * priceInUSD;
+				console.log("$" + totalOwed + " is the total for this sale.");
+
+				// mailto recipt
+
+				window.location.href = "mailto:tradergarlic@gmail.com?subject=Garlic%20PayPal%20Notice%20From%20Seller&body=Amount%20Sent: " + coinAmountSent + "%0ATransaction%20ID: " + transaction + "%0ASeller%20Paypal: " + paypalAddress + "%0ATotal%20Owed: $" + totalOwed + " (based on current trading value) %0A%0A------------------------------------------%0A%0AReceipt%20generated%20by%20GarlicTrader.%20Please%20do%20not%20change%20any%20information%20in%20this%20message%2C%20otherwise%20your%20sale%20will%20be%20invalid%20and%20we%20will%20keep%20your%20coins.%20Thank%20you."
 
 			}
 		</script>
@@ -169,8 +200,8 @@
 
 			<!-- Form Stuff! -->
 
-			<h3>Ammount Sent:</h3>
-			<input id="coinAmmountSent" type="text" name="ammountSent" placeholder="Ammount Sent">
+			<h3>Amount Sent:</h3>
+			<input id="coinAmountSent" type="text" name="amountSent" placeholder="Amount Sent">
 
 			<h3>Transaction ID:</h3>
 			<input id="transactionID" type="text" name="txid" placeholder="TX ID">
@@ -186,8 +217,8 @@
 
 			<!-- Form Stuff! -->
 
-			<h3>Ammount Wanted:</h3>
-			<input id="coinAmmountWanted" type="text" name="ammountWanted" placeholder="Ammount Wanted">
+			<h3>Amount Wanted:</h3>
+			<input id="coinAmountWanted" type="text" name="amountWanted" placeholder="Amount Wanted">
 
 			<h3>Wallet Address:</h3>
 			<input id="walletAddress" type="text" name="wantedAddress" placeholder="Wallet Address">
@@ -198,10 +229,9 @@
 			<button type="submit" onclick="buyClicked()">Buy Coins</button>
 		</div>
 
-		<!-- Footer time! -->
+		<!-- Header/Footer time! -->
 
-		<div class="footer">bank: <strong>GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6</strong>
-			<p><b>GarlicTrader is currently in beta! Things may change!<b></p>
-		</div>
+		<div class="footer">bank: <strong>GXRH9QvpB2iEn1maY5QtVwfnyYcuhL3KK6</strong></div>
+		<div class="notice info"><p id="innerAlert"><b>GarlicTrader is still in beta! Some things may not work. Please read <a href="https://gist.github.com/nathanaccidentally/937bc578045898f790636a2653db15d1">all terms</a> before trading.</b></p></div>
 	</body>
 </html>

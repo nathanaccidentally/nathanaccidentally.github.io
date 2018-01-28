@@ -5,9 +5,17 @@ body {
 
 .garlicHeader {
 	position: absolute;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	top: 10%;
+	left: 44%;
+}
+
+.garlicHeader:hover {
+    -webkit-animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
 }
 
 .garlicPrice {
@@ -19,7 +27,7 @@ body {
 
 .bankBalance {
 	position: absolute;
-	top: 35%;
+	top: 30%;
 	left: 45.5%;
 	transform: translate(-50%, -50%);
 }
@@ -27,7 +35,7 @@ body {
 .sellArea {
 	position: absolute;
 	top: 65%;
-	left: 30%;
+	left: 35%;
 	transform: translate(-50%, -50%);
 	width: 300px;
 	height: 400px;
@@ -38,7 +46,7 @@ body {
 .buyArea {
 	position: absolute;
 	top: 65%;
-	left: 70%;
+	left: 65%;
 	transform: translate(-50%, -50%);
 	width: 300px;
 	height: 400px;
@@ -58,6 +66,7 @@ p {
 	text-align: center;
 	vertical-align: middle;
  	line-height: 0.5px;
+ 	margin: 0;
 }
 
 h3 {
