@@ -22,10 +22,10 @@
 			var bankBalance;
 			var transaction;
 
-			const tradeSatoshiApi = "https://cors.io/?https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
+			const tradeSatoshiApi = "https://cors-anywhere.herokuapp.com/https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
-			const currentBankBalance = "https://cors.io/?http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
-			const checkTransactionID = "https://cors.io/?https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
+			const currentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
+			const checkTransactionID = "https://cors-anywhere.herokuapp.com/https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
 			fetch(tradeSatoshiApi, {
 				method: 'get'
@@ -258,11 +258,14 @@
 
 		<!-- Header/Footer time! -->
 
-		<div id="footer" class="footer">bank: <strong>GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT</strong></div>
 		<div class="notice info"><p id="innerAlert"><b>New PayPal transactions will now come from a new account! Please read <a href="https://gist.github.com/nathanaccidentally/937bc578045898f790636a2653db15d1">all terms</a> before trading. Transactions will be near instant from 7-8am to 12-3pm PST.</b></p><br>
 
 		<p>Sellers, send the ammount to the bank below and fill out the sell form.</p>
+		</div>
 
+		<div id="footer" class="footer">bank: <strong>GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT</strong><br>
+
+		<p class="pFooter"><a href="mailto:nathanaccidentally@gmail.com">Contact/Support</p>
 		</div>
 	</body>
 </html>

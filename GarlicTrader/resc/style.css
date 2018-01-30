@@ -69,6 +69,14 @@ p {
  	margin: 0;
 }
 
+.pFooter {
+	font-size: 12px;
+	text-align: center;
+	vertical-align: middle;
+ 	line-height: 5px;
+ 	margin-top: 8px;
+}
+
 h3 {
 	font-size: 15px;
 	padding-top: 5%;
