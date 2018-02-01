@@ -125,7 +125,7 @@
 					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
 					window.bankBalance = bankBalance + secondaryBankBalance; // also saves sec + first balance first. 
 
-					if (bankBalance >= 5) {
+					if (bankBalance >= 10) {
 						console.log("Bank is overfilled. Please wait for buyers before selling.");
 						document.getElementById("footer").innerHTML = "Too many sellers! Please wait for more buyers!"; // To avoid too many sellers.
 
