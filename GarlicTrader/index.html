@@ -20,11 +20,13 @@
 			var bitcoinFloat;
 			var priceInUSD;
 			var bankBalance;
+			var secondaryBankBalance;
 			var transaction;
 
 			const tradeSatoshiApi = "https://cors-anywhere.herokuapp.com/https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
 			const currentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
+			const secondaryCurrentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
 			const checkTransactionID = "https://cors-anywhere.herokuapp.com/https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
 			fetch(tradeSatoshiApi, {
@@ -89,6 +91,23 @@
 					window.priceInUSD = priceInUSD; //set globally
 				}, 2000)
 
+				// First getting the secondary bank address to add the two.
+
+				fetch(secondaryCurrentBankBalance, {
+					method: 'get'
+				}).then(function(gettingSecondBankBalance) {
+					console.log('%c Was able to access the explorer to get secondary bank balance. ', 'color: green;')
+
+					return gettingSecondBankBalance.json();
+				}).then(function(secondaryBankBalaceResponse) {
+					// Set secondary bank variables.
+
+					secondaryBankBalance = secondaryBankBalaceResponse;
+					console.log("Explorer says the secondary bank has " + secondaryBankBalance + " coins.");
+
+					window.secondaryBankBalance = secondaryBankBalance; // global
+				})
+
 				fetch(currentBankBalance, {
 					method: 'get'
 				}).then(function(gettingBankBalance) {
@@ -99,12 +118,12 @@
 					// Set bank variables.
 
 					bankBalance = bankBalaceResponse;
-					console.log("Explorer says the bank has " + bankBalance + " coins.");
+					console.log("Explorer says the bank has " + bankBalance + secondaryBankBalance + " coins.");
 
 					document.getElementById("bankBalance").innerHTML = "Current store balance: " + bankBalance + " coins";
 
 					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
-					window.bankBalance = bankBalance; // global
+					window.bankBalance = bankBalance + secondaryBankBalance; // also saves sec + first balance first. 
 
 					if (bankBalance >= 5) {
 						console.log("Bank is overfilled. Please wait for buyers before selling.");
@@ -177,7 +196,7 @@
 
 					console.log("Above is the raw transaction info.");
 
-					if (transaction.vout[0].value != coinAmountSent && transaction.vout[1].value != coinAmountSent && transaction.vout[1].value != coinAmountSent) { // making sure it's the right transaction on blockchain.
+					if (transaction.vout[0].value != coinAmountSent && transaction.vout[1].value != coinAmountSent && transaction.vout[2].value != coinAmountSent) { // making sure it's the right transaction on blockchain. sometimes fees get sent around.
 						console.log(transaction.vout[0].value + " != " + coinAmountSent);
 						alert("Transaction failed! Transaction does not match amount sent.");
 						console.log('%c Oh no! transactionID did NOT match the amount sent. ', 'color: red;');
