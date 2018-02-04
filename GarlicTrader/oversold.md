@@ -1,1 +1,0 @@
-Oh no! Looks like we oversold coins. Would you like to keep your order request in or remove your order request?
