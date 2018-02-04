@@ -1,7 +1,16 @@
 /* Here's the animation stuff. */
 
-.spin {
+.spinEgg {
 	-webkit-animation: spin 20s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}
+
+.spin {
+	-webkit-animation: spin 2s infinite linear;
 }
 
 @-webkit-keyframes spin {
