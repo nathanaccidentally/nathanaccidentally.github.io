@@ -1,0 +1,21 @@
+/* Here's the animation stuff. */
+
+.spin {
+	-webkit-animation: spin 20s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}
+
+@keyframes color {
+    from {background-color: white;}
+    to {background-color: red;}
+}
+
+.color {
+	background-color: red;
+	animation-name: color;
+	animation-duration: 60s;
+}
