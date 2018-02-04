@@ -21,6 +21,20 @@
 				console.log("GarlicTrader has confirmed you are NOT on a mobile device.");
 			}
 
+			// Limited refferal code time.
+
+			var address = window.location.href;
+			var refferal = address.split('?');
+			refferal = refferal[1]; // Get our code.
+
+			console.log("Your refferal code is: " + refferal);
+
+			// if (refferal == "CUN2AQF9") {
+			//	alert("Code works");
+			//} else {
+			//	alert("Broken");
+			//}
+
 			// Now that we're free of mobile users, let's set up our API's.
 			// First I'm going to set my global variables.
 
@@ -38,7 +52,7 @@
 			const tradeSatoshiApi = "https://cors-anywhere.herokuapp.com/https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
 			const currentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
-			const secondaryCurrentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
+			const secondaryCurrentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSexENJf9ygBNRcNa3HS2wG2kFTy6wZfog";
 			const checkTransactionID = "https://cors-anywhere.herokuapp.com/https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
 			// Now I am ready to pull data from these servers. Using CORS-anywhere as a proxy.
