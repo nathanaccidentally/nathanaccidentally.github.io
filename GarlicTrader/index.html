@@ -1,27 +1,37 @@
 <!DOCTYPE html>
+
+<!-- Hola, welcome to GarlicTrader 2.0. Rewritten on 2/1/18. Thanks to the people still using this site. -->
+
 <html>
 	<head>
+		<!-- I am using the <head> to hold JavaScript stuff too! -->
+
 		<title>GarlicTrader</title>
 		<link rel="stylesheet" href="resc/style.css">
 		<link rel="stylesheet" href="resc/alert.css">
 		<link rel="icon" href="images/logo.png">
 
 		<script>
-
-			// First do the mobile device check. I will rework this later.
+			// Before I do anything, I need to redirect mobile users to a mobile warning.
 
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				 alert("GarlicTrader does not work well on mobile devices!");
+				 window.location = "resc/mobile/index.html"; // Redirect mobile users.
+			} else {
+				console.log("GarlicTrader has confirmed you are NOT on a mobile device.");
 			}
 
-			// Here is where I will set up all API's I need.
+			// Now that we're free of mobile users, let's set up our API's.
+			// First I'm going to set my global variables.
 
-			var satoshiPrice;
-			var bitcoinFloat;
-			var priceInUSD;
-			var bankBalance;
-			var secondaryBankBalance;
-			var transaction;
+			var satoshiPrice; // Price I get from the API.
+			var bitcoinFloat; // The float value from Coindesk.
+			var priceInUSD; // The conversion from BTC --> USD
+			var bankBalance; // The global bank balance from both banks.
+			var secondaryBankBalance; // Secondary bank.
+			var transaction; // For sending reciepts.
+			var mode = "day";
+
+			// Now I'm going to setup my API locations.
 
 			const tradeSatoshiApi = "https://cors-anywhere.herokuapp.com/https://tradesatoshi.com/api/public/getmarkethistory?market=GRLC_BTC&count=1";
 			const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
@@ -29,55 +39,55 @@
 			const secondaryCurrentBankBalance = "https://cors-anywhere.herokuapp.com/http://explorer.grlc-bakery.fun/ext/getbalance/GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT";
 			const checkTransactionID = "https://cors-anywhere.herokuapp.com/https://explorer.grlc-bakery.fun/api/getrawtransaction?txid=";
 
-			fetch(tradeSatoshiApi, {
+			// Now I am ready to pull data from these servers. Using CORS-anywhere as a proxy.
+
+			fetch(tradeSatoshiApi, { // Uses URL from above to get info brom TS which we can compare to BTC later with Coindesk.
 				method: 'get'
 			}).then(function(satoshiResponse) {
-				console.log('%c Was able to reach TradeSatoshi API ', 'color: green;') // Able to connect to Satoshi.
+				console.log('%c YES! I was able to connect to the Trade Satoshi API. ', 'color: green;');
 
-				// I am now going to get a response in JSON and work with it.
-
-				return satoshiResponse.json(); // This is all this handles. Now for the next part.
+				return satoshiResponse.json(); // We should have gotten a response from Trade Satoshi. This makes it JSON and easy to read.
 			}).then(function(satoshiResponseJSON) {
-				// Now our JSON response is a JS object. Now I can mess with it and set it's values.
-				console.log(satoshiResponseJSON); // Log it.
-				var stringSatoshiJSON = JSON.stringify(satoshiResponseJSON);
+				// Now are TS response is a JSON array.
+
+				console.log(satoshiResponseJSON); // Log it for debugging.
+				var stringSatoshiJSON = JSON.stringify(satoshiResponseJSON); // I had to make this a string and parse it manually because the JSON response is difficult to work with.
 				console.log(stringSatoshiJSON);
 
-				// For some reason I can't get stuff from this JSON array so I have to do it manually lol.
-
-				var isolatedStringSetOne = stringSatoshiJSON.slice(stringSatoshiJSON.indexOf('price":') + 'price":'.length); // Isolate part of our string.
+				var isolatedStringSetOne = stringSatoshiJSON.slice(stringSatoshiJSON.indexOf('price":') + 'price":'.length); // Isolate part of our string to get just the price.
 				
 				satoshiPrice = isolatedStringSetOne.split(',')[0]
-				console.log(satoshiPrice);
+				console.log(satoshiPrice + " BTC");
 
-				// Yay! Price is now done.
+				// Yay! Price is now done. I have parsed it manually.
 
 			}).catch(function() {
-				console.log('%c Error! Could not reach TradeSatoshi. ', 'color: red;');
+				console.log('%c Error! Could not reach TradeSatoshi. If this problem persists, please press the contact button at the bottom of the page. ', 'color: red;');
 
-				document.getElementById("garlicPrice").innerHTML = "Internal error. Please reload.";
+				document.getElementById("garlicPrice").innerHTML = "Internal error. Please reload."; // Return our error if it fails to user.
 			})
 
-			// Time to get a conversion from BTC to USD.
+			// Now that we have our price, we need to use Coindesk to convert GRLC price from TS to USD.
 
 			fetch(coindeskApi, {
 				method: 'get'
 			}).then(function(coindeskResponse) {
-				console.log('%c Was able to reach Coindesk API ', 'color: green;')
+				console.log('%c YES! I was able to reach Coindesk API ', 'color: green;');
+				return coindeskResponse.json(); // Parse data!
 
-				return coindeskResponse.json();
-
-				setTimeout(coindeskResponseJSON)
 			}).then(function(coindeskResponseJSON) {
-				// Setting our variables,
+				// Setting our variables. Globally of course.
 
-				bitcoinFloat = coindeskResponseJSON.bpi.USD.rate_float;
+				window.bitcoinFloat = coindeskResponseJSON.bpi.USD.rate_float; // Again, setting it globally.
 				console.log("Current BTC price = " + bitcoinFloat + ".");
 			})
 
+			// Now it's time to handle our GUI functions.
+			// This part was NOT rewritten. If it ain't broke don't fix it.
+
 			function setPrices() {
 
-				// Set prices sets the BTC to USD price and also the bank prices.
+				// Set prices sets the BTC to USD price and also both bank prices.
 
 				setTimeout(function() {
 					var priceInUSD = satoshiPrice * bitcoinFloat;
@@ -118,14 +128,17 @@
 					// Set bank variables.
 
 					bankBalance = bankBalaceResponse;
-					console.log("Explorer says the bank has " + bankBalance + secondaryBankBalance + " coins.");
+					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
+					bankBalance = bankBalance + secondaryBankBalance; // also saves sec + first balance first.
+					bankBalance = bankBalance.toString();
+					window.bankBalance = bankBalance.substring(0, 5);
 
 					document.getElementById("bankBalance").innerHTML = "Current store balance: " + bankBalance + " coins";
 
-					console.log('%c GarlicTrader is all setup! Everything should work as described and all endpoints are working. ', 'color: green;')
-					window.bankBalance = bankBalance + secondaryBankBalance; // also saves sec + first balance first. 
+					console.log("Explorer says the bank has " + bankBalance + " coins.");
 
-					if (bankBalance >= 10) {
+					setTimeout(function() {
+						if (bankBalance >= 10) {
 						console.log("Bank is overfilled. Please wait for buyers before selling.");
 						document.getElementById("footer").innerHTML = "Too many sellers! Please wait for more buyers!"; // To avoid too many sellers.
 
@@ -133,6 +146,7 @@
 					} else {
 						console.log("Seller pool is NOT full. You can sell! Yay!");
 					}
+				}, 3000); // Wait to judge.
 				}).catch(function(catchBankBalance) {
 					console.log('%c The Explorer API is not working. Please refresh or check API checkpoints. ', 'color: red;')
 
@@ -229,22 +243,53 @@
 				window.location.href = "mailto:tradergarlic@gmail.com?subject=Garlic%20PayPal%20Notice%20From%20Seller&body=Amount%20Sent: " + coinAmountSent + "%0ATransaction%20ID: " + transaction + "%0ASeller%20Paypal: " + paypalAddress + "%0ATotal%20Owed: $" + totalOwed + " (based on current trading value) %0A%0A------------------------------------------%0A%0AReceipt%20generated%20by%20GarlicTrader.%20Please%20do%20not%20change%20any%20information%20in%20this%20message%2C%20otherwise%20your%20sale%20will%20be%20invalid%20and%20we%20will%20keep%20your%20coins.%20Thank%20you."
 			}
 		}
+
+		// Styling stuff.
+
+		function setMode() {
+			if (mode == "day") {
+				console.log('%c Going into night mode. ', 'color: purple;');
+				var textElemets = document.querySelectorAll('h1,h2,h3,p');
+
+				document.body.style.background = 'black';
+
+				for(var i = 0; i < textElemets.length; i++) {
+   					textElemets[i].style.color = "#fff";
+				}
+
+				document.getElementById("notice").style.display = "none";
+
+				window.mode = "night";
+			} else {
+				console.log('%c Going into day mode. ', 'color: orange;');
+				var textElemets = document.querySelectorAll('h1,h2,h3,p');
+
+				document.body.style.background = 'white';
+
+				for(var i = 0; i < textElemets.length; i++) {
+   					textElemets[i].style.color = "black";
+				}
+
+				document.getElementById("notice").style.display = "block";
+
+				window.mode = "day";
+			}
+		}
 		</script>
 	</head>
 
 	<body onload="setPrices()">
-		<!-- The actual interface. Probably alredy knew that. -->
-
-		<img src="images/logo.png" class="garlicHeader" width="190px" height="190Spx">
+		<!-- This is the ACTUAL interface. You probably already knew that. -->
+		<img src="images/logo.png" class="garlicLogo" width="190px" height="190px">
 
 		<h1 id="garlicPrice" class="garlicPrice">Getting current trading value...</h1>
 		<h3 id="bankBalance" class="bankBalance">Gathering store balance...</h3>
 
+		<!-- Time to add the buy/sell areas -->
+
 		<div class="sellArea">
 			<h2>Sell</h2>
 			<p id="sellLogo">Read the sellers terms before selling!</p>
-
-			<!-- Form Stuff! -->
 
 			<h3>Amount Sent:</h3>
 			<input id="coinAmountSent" type="text" name="amountSent" placeholder="Amount Sent">
@@ -257,6 +302,7 @@
 
 			<button id="sellButton" type="submit" onclick="sellClicked()">Sell Coins</button>
 		</div>
+
 		<div class="buyArea">
 			<h2>Buy</h2>
 			<p>Check the bank before buying!</p>
@@ -277,14 +323,14 @@
 
 		<!-- Header/Footer time! -->
 
-		<div class="notice info"><p id="innerAlert"><b>New PayPal transactions will now come from a new account! Please read <a href="https://gist.github.com/nathanaccidentally/937bc578045898f790636a2653db15d1">all terms</a> before trading. Transactions will be near instant from 7-8am to 12-3pm PST.</b></p><br>
+		<div class="notice info" id="notice"><p id="innerAlert"><b>New PayPal transactions will now come from a new account! Please read <a href="https://gist.github.com/nathanaccidentally/937bc578045898f790636a2653db15d1">all terms</a> before trading. Transactions will be near instant from 7-8am to 12-3pm PST.</b></p><br>
 
 		<p>Sellers, send the ammount to the bank below and fill out the sell form.</p>
 		</div>
 
 		<div id="footer" class="footer">bank: <strong>GSsXHEpPn4nvzRr67oFuDYb9CU2dTwQGbT</strong><br>
 
-		<p class="pFooter"><a href="mailto:nathanaccidentally@gmail.com">Contact/Support</p>
+		<p class="pFooter"><a href="https://discord.gg/eQcfqyj">Contact/Support Discord</a> <a href="#" onclick="setMode()">Day/Night Mode</a></p>
 		</div>
 	</body>
 </html>

@@ -1,15 +1,19 @@
+/* Hola, welcome to the GarlicTrader CSS. Rewritten on 2/1/18. */
+
 body {
-	overflow: hidden;
+	overflow-y: scroll;
 	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.garlicHeader {
-	position: absolute;
+/* First thing I'm setting up is the GRLC logo and the animation */
+
+.garlicLogo {
+	position: absolute;;
 	top: 10%;
 	left: 44%;
 }
 
-.garlicHeader:hover {
+.garlicLogo:hover {
     -webkit-animation: spin 1s infinite linear;
 }
 
@@ -17,6 +21,8 @@ body {
     0%   {-webkit-transform: rotate(0deg)}
     100% {-webkit-transform: rotate(360deg)}
 }
+
+/* Now time for Garlic Price, bank balance, sell/buy areas, etc. */
 
 .garlicPrice {
 	position: absolute;
@@ -27,7 +33,7 @@ body {
 
 .bankBalance {
 	position: absolute;
-	top: 30%;
+	top: 32%;
 	left: 45.5%;
 	transform: translate(-50%, -50%);
 }
@@ -52,7 +58,9 @@ body {
 	height: 400px;
 	border: 2.5px solid grey;
 	border-radius: 20px;
-}
+} 
+
+/* Final stuff. (Footer, tag modifications) */
 
 h2 {
 	text-align: center;
@@ -105,3 +113,5 @@ button {
   background-color: #efefef;
   text-align: center;
 }
+
+/* CSS is over */

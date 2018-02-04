@@ -1,4 +1,4 @@
-/* taken from walesmd on Codepen */
+/* Taken from walesmd on Codepen */
 
 .notice {
   position: relative;
@@ -33,31 +33,4 @@
 .info:before {
   content: "i";
   background-color: #0074D9;
-}
-
-.success {
-  border-color: #2ECC40;
-}
-
-.success:before {
-  content: "√";
-  background-color: #2ECC40;
-}
-
-.warning {
-  border-color: #FFDC00;
-}
-
-.warning:before {
-  content: "!";
-  background-color: #FFDC00;
-}
-
-.error {
-  border-color: #FF4136;
-}
-
-.error:before {
-  content: "X";
-  background-color: #FF4136;
 }
