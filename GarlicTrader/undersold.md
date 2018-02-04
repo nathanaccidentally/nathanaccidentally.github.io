@@ -1,1 +1,0 @@
-Oh no! Looks like we undersold for today. If you would like to keep your funds in the bank until tomorrow, you may do so by responding "Keep my funds in the bank." otherwise comment, "refund" along with your wallet address. Thanks!
