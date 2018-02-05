@@ -1,7 +1,9 @@
 <html>
 	<head>
 		<script>
+		function getAPI() {
 			const api = "getSellerTransactions.json";
+			var apiResp;
 
 			fetch(api, {
 				method: 'get'
@@ -9,17 +11,19 @@
 				console.log('%c OK ', 'color: green;');
 
 				return apiResp.json();
-				console.log(apiResp);
 
-				// OK.
+				// OK
+			}).then(function(apiRespJSON) {
+				console.log(apiRespJSON);
 
-				apiResp = json.Stringify(apiResp);
-				document.getElementById("resp").innerHTML = apiResp;
+				apiRespJSON = JSON.stringify(apiRespJSON);
+				document.getElementById("resp").innerHTML = apiRespJSON;
 			})
+		}
 		</script>
 	</head>
 
-	<body>
+	<body onload="getAPI()">
 		<pre id="resp" style="word-wrap: break-word; white-space: pre-wrap;"></pre>
 	</body>
 </html>
