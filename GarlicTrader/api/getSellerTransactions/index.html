@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<script>
+			const api = "getSellerTransactions.json";
+
+			fetch(api, {
+				method: 'get'
+			}).then(function(apiResp) {
+				console.log('%c OK ', 'color: green;');
+
+				return apiResp.json();
+				console.log(apiResp);
+			})
+		</script>
+	</head>
+</html>
