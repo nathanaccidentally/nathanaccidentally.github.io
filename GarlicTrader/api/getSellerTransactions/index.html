@@ -10,7 +10,16 @@
 
 				return apiResp.json();
 				console.log(apiResp);
+
+				// OK.
+
+				apiResp = json.Stringify(apiResp);
+				document.getElementById("resp").innerHTML = apiResp;
 			})
 		</script>
 	</head>
+
+	<body>
+		<pre id="resp" style="word-wrap: break-word; white-space: pre-wrap;"></pre>
+	</body>
 </html>
