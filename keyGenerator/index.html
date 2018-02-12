@@ -8,42 +8,71 @@
 		<script>
 			var string = "";
 			var amValue;
+			var am1;
+			var am0;
+
+			function startTime() {
+				window.am0 = performance.now(); // Start the thing.
+			}
 
 			function makeString() {
 				amValue = document.getElementById("amountOfChar").value;
 				amValue = parseInt(amValue);
 
-				console.log("Making string...");
+				// First check if value is too high.
+
+				if (amValue > 9999) {
+					alert("Your number, " + amValue + ", is too big.");
+					return;
+				}
+
 				var aval = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-				var randChar = aval[Math.floor(Math.random() * aval.length)];
+				var randChar = aval[Math.floor(Math.random() * aval.length)]; // Gets a random character from array.
 
 				if (string.length < amValue) {
-					document.getElementById("stringSub").innerHTML = "making a string one sec";
 					string = string + randChar;
 					console.log(string);
 
 					makeString();
 				} else {
 					document.getElementById("stringSub").innerHTML = "your string is <br><br>" + string;
-					console.log("made string.");
+					window.am1 = performance.now();
+					string = ""; // Reset.
 
-					string = ""
+					var timeM = am1 - am0;
+					var time = timeM / 1000;
+					time = time.toString()
+					time = time.substring(0,4);
+
+					document.getElementById("time").innerHTML = time + "s";
+
+					// Removing console junk and reset timer.
+
+					setTimeout (function() {
+						console.clear();
+
+						window.am0 = "";
+						window.am1 = "";
+					}, 2000)
 				}
 			}
+
 		</script>
 	</head>
 
 	<body>
 		<div class="title">
-			<h1>Leena is Sexy</h1>
+			<h1>String Generator</h1>
 			<p id="stringSub">A nice string maker.</p>
 		</div>
 
 		<div  class="boxUno">
 			<h3>Length of String:</h3>
 			<input id="amountOfChar" type="text" name="amountOfChar" placeholder="String Length">
-			<button type="submit" onclick="makeString()">go</button>
+			<button type="submit" onclick="startTime(); makeString()">go</button>
 		</div>
+
+		<h3 class="time" id="time"></h3>
 	</body>
 </html>
