@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>ddosmysite</title>
+
+		<script>
+			const site = "https://nathanaccidentally.us/";
+			var count = 0;
+
+			var headers = new Headers();
+			headers.append('pragma', 'no-cache');
+			headers.append('cache-control', 'no-cache');
+
+			function ddos() {
+				fetch(site, {
+					method: 'get',
+					headers: headers,
+				}).then(function(makeReq) {
+
+					return makeReq.text();
+				}).then(function(finalAPIResp) {
+					console.log("hit site");
+					count = count + 1;
+
+					document.getElementById("number").innerHTML = "number of times hit: " + count;
+					ddos();
+				})
+			}
+		</script>
+	</head>
+
+	<body>
+		<h1>Welcome to DDOS my site!</h1>
+		<p>Just click the button. Yes, it works. Do you have to do it? No.</p>
+
+		<button onclick="ddos()">go</button><br><br>
+
+		<h2>Why?</h2>
+		<p>Why not? I'm just being a goof.</p><br>
+
+		<b><p>Clicking the button multiple times makes it harder.</p></b>
+
+		<p id="number"></p>
+	</body>
+</html>
