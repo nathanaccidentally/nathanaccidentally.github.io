@@ -10,6 +10,7 @@
 			var amValue;
 			var am1;
 			var am0;
+			var randReg = "randChar";
 
 			function startTime() {
 				window.am0 = performance.now(); // Start the thing.
@@ -28,10 +29,21 @@
 
 				var aval = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+				var ex = ['`', '!', '@', '#', '$', '%', '^', '&', '*'];
+
+				var toPick = ['randChar', 'randEx'];
+
 				var randChar = aval[Math.floor(Math.random() * aval.length)]; // Gets a random character from array.
+				var randEx = ex[Math.floor(Math.random() * ex.length)];
+
+				if (document.getElementById("checkBox").checked == true) {
+					window.randReg = toPick[Math.floor(Math.random() * toPick.length)]; // Outputs which one to use.
+				} else {
+					window.randReg = "randChar"; // Otherwise act normal.
+				}
 
 				if (string.length < amValue) {
-					string = string + randChar;
+					string = string + eval(randReg);
 					console.log(string);
 
 					makeString();
@@ -79,6 +91,7 @@
 			<h3>Length of String:</h3>
 			<input id="amountOfChar" type="text" name="amountOfChar" placeholder="String Length">
 			<button type="submit" onclick="startTime(); makeString()">go</button>
+			<input id="checkBox" type="checkbox"><p>Checkbox = Other Characters</p>
 		</div>
 
 		<h3 class="time" id="time"></h3>
