@@ -1,6 +1,10 @@
 body {
-	background-color: green;
+	background-color: #212121;
 	font-family: OCR A Std, monospace;
+}
+
+p, h1, h2, h3 {
+	color: #bfbfbf;
 }
 
 .title {

@@ -58,6 +58,14 @@
 				}
 			}
 
+			document.documentElement.addEventListener("keydown", run);
+
+			function run() {
+				if (event.keyCode == 13) {
+					startTime();
+					makeString();
+				}
+			}
 		</script>
 	</head>
 
