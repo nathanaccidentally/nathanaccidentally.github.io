@@ -1,0 +1,39 @@
+body {
+	overflow-y: scroll;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.title {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.titleSubtext {
+	font-size: 12px;
+}
+
+.button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+a {
+	color: black;
+}
+
+/* Footer */
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #efefef;
+  text-align: center;
+}
