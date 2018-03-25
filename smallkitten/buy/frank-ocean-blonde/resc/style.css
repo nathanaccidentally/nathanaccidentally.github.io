@@ -1,0 +1,9 @@
+body {
+	background-color: black;
+}
+
+.cover {
+	width: 400px;
+	height: 400px;
+	margin: 5%;
+}

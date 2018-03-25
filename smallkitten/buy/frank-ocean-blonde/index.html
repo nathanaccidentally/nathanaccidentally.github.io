@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Small Kitten Records</title>
+		<link rel="stylesheet" href="resc/style.css">
+
+		<script>
+			function changeImage() {
+				cover = document.getElementById("cover");
+				console.log(cover.src);
+
+				if (cover.src == "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/cover.png") {
+					cover.src = "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/backcover.png";
+				} else {
+					cover.src = "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/cover.png";
+				}
+			}
+ 		</script>
+	</head>
+
+	<body>
+		<img id="cover" onclick="changeImage()" class="cover" src="cover.png">
+	</body>
+</html>
