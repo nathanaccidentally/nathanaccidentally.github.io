@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Small Kitten Records</title>
+		<link rel="stylesheet" href="resc/style.css">
+
+		<script>
+			function changeImage() {
+				cover = document.getElementById("cover");
+				console.log(cover.src);
+
+				if (cover.src == "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/cover.png") {
+					cover.src = "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/backcover.png";
+				} else {
+					cover.src = "https://nathanaccidentally.us/smallkitten/buy/frank-ocean-blonde/cover.png";
+				}
+			}
+ 		</script>
+	</head>
+
+	<body>
+		<div class="product">
+			<img id="cover" onclick="changeImage()" class="cover" src="cover.png">
+			<h1>Frank Ocean - Blonde (Vinyl Set)</h1>
+			<h2>Ltd. to 25</h2>
+
+			<p class="desc">A super limited run of Frank Ocean's 2016 album, Blonde. Each set comes with a fully remastered 2 LP copy of Blonde as well as 5 Frank Ocean stickers, one black T-Shirt featuring the Black Friday cover art, a custom printed turntable slipmat, and a button.</p><br>
+
+			<h2 class="ship">Ships in 8-11 weeks.</h2>
+			<h2 class="ship">U.S Only</h2>
+		</div>
+
+		<div class="paypal">
+			<h1>Purchase</h1><br>
+
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="GLYKQ82UAAHD2">
+<table>
+<tr><td><input type="hidden" name="on0" value="Ammount">Ammount</td></tr><tr><td><select name="os0">
+	<option value="1 -">1 - $70.00 USD</option>
+	<option value="2 -">2 - $140.00 USD</option>
+	<option value="3 -">3 - $210.00 USD</option>
+</select> </td></tr>
+<tr><td><input type="hidden" name="on1" value="Shirt Size">Shirt Size</td></tr><tr><td><select name="os1">
+	<option value="Adult Small">Adult Small </option>
+	<option value="Adult Medium">Adult Medium </option>
+	<option value="Adult Large">Adult Large </option>
+</select> </td></tr>
+<tr><td><input type="hidden" name="on2" value="Email">Email</td></tr><tr><td><input type="text" name="os2" maxlength="200"></td></tr>
+</table>
+<input type="hidden" name="currency_code" value="USD">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
+
+<br><br><br><br><img src="resc/logo.png">
+
+		</div>
+	</body>
+</html>
