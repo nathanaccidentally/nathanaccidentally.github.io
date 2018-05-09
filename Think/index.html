@@ -12,7 +12,7 @@
   	   console.log("Setting notifications.")
      }
 
-     var permission;
+     var permission = null;
 
   // We need to have the time in here lol
 
@@ -42,6 +42,10 @@
 			// Now for getting notification permissions.
 
 			Notification.requestPermission().then(function(permission) { console.log(permission); // Great, now we have notification access! (Hopefully lol)
+
+				if (permission == "granted") {
+					hideStartScreen();
+				}
 
 			// Now we need to check if we have permissions.
 
@@ -102,14 +106,6 @@
 				document.getElementById("timeInputClass").style.display = 'block';
 		                document.getElementById("timeInput").style.display = 'block';
          }
-
-         function constCh() {
-         	if (permission == "granted") {
-					hideStartScreen();
-				}
-         }
-
-         setTimeout(constCh, 1);
 	</script>
 
 	<script>
