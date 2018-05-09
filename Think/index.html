@@ -12,12 +12,14 @@
   	   console.log("Setting notifications.")
      }
 
+     var permission;
+
   // We need to have the time in here lol
 
 	function startThink() {
 		setTime = 'null'; // Need to set this to avoid errors.
 
-		permission = Notification.permission;
+		window.permission = Notification.permission;
 
 		document.getElementById("mainInput").style.display = 'none';
 		document.getElementById("mainInputClass").style.display = 'none';
