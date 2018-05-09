@@ -28,9 +28,11 @@
 		document.getElementById("timeInputClass").style.display = 'none';
 		document.getElementById("timeInput").style.display = 'none';
 		
-		if (permission === "granted") { // I check if we have permission to avoid errors for people who already accept.
+		if (permission == "granted") { // I check if we have permission to avoid errors for people who already accept.
 				console.log("Permissions have been granted. Posting notification.");
 				new Notification('Welcome!', { body: "Welcome to Think. Just type your reminder, set a time, and we'll send you a notification when you need to feed your pup.", icon: 'clock.png',});
+
+				hideStartScreen();
 
 				// Great, now we can hide what's already on the page. (The warning I set)
 
@@ -42,10 +44,6 @@
 			// Now for getting notification permissions.
 
 			Notification.requestPermission().then(function(permission) { console.log(permission); // Great, now we have notification access! (Hopefully lol)
-
-				if (permission == "granted") {
-					hideStartScreen();
-				}
 
 			// Now we need to check if we have permissions.
 
