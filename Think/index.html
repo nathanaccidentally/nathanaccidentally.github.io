@@ -32,8 +32,6 @@
 
 				// Great, now we can hide what's already on the page. (The warning I set)
 
-				hideStartScreen();
-
 			}
 
 		if (permission == "default" || permission == "denied") {
@@ -42,6 +40,8 @@
 			// Now for getting notification permissions.
 
 			Notification.requestPermission().then(function(permission) { console.log(permission); // Great, now we have notification access! (Hopefully lol)
+
+				window.location.replace(window.location.pathname + window.location.search + window.location.hash);
 
 			// Now we need to check if we have permissions.
 
@@ -100,7 +100,7 @@
 				document.getElementById("mainHeader").style.display = 'block';
 				document.getElementById("postButton").style.display = 'block';
 				document.getElementById("timeInputClass").style.display = 'block';
-		        document.getElementById("timeInput").style.display = 'block';
+		                document.getElementById("timeInput").style.display = 'block';
          }
 	</script>
 
