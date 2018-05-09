@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>download center</title>
+		<link rel="stylesheet" href="style.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+
+		<script>
+		function setFrame() {
+			w = window.innerWidth;
+			h = window.innerHeight;
+
+			if (w >= 1000) {
+				// This is for changing stuff if your screen is too big lmao
+
+				document.getElementById("header1").style.marginLeft = "2%";
+				document.getElementById("text1").style.marginLeft = "2%";
+				document.getElementById("header1").style.paddingTop = "2%";
+
+				document.getElementById("header2").style.marginLeft = "2%";
+				document.getElementById("text2").style.marginLeft = "2%";
+				document.getElementById("header2").style.paddingTop = "2%";
+
+				document.getElementById("header3").style.marginLeft = "2%";
+				document.getElementById("text3").style.marginLeft = "2%";
+				document.getElementById("header3").style.paddingTop = "2%";
+			}
+		}
+		</script>
+	</head>
+
+	<body onload="setFrame()">
+		<div class="background"></div>
+
+		<h1 class="siteTitle">download center</h1>
+		<div class="box">
+			<a href="https://nathanaccidentally.us/beta/com.nathanaccidentally.dock_0.0.2-43+debug_iphoneos-arm.deb">
+			<h1 id="header1">Dock</h1>
+			<p id="text1">I have taken a break from Jailbreak development for a while. Download the latest beta of Dock here.</p>
+			</a>
+		</div>
+
+		<div class="box">
+			<a href="https://github.com/nathanaccidentally/TweakVerify/raw/master/downloads/TweakSign-1.1.dmg">
+			<h1 id="header2">TweakSign/Verify</h1>
+			<p id="text2">A way for developers to easily sign packages to a signature, so users can verify the integrity of debian packages.</p>
+			</a>
+		</div>
+
+		<p class="footer">
+			(c) nathan goodwin 2017
+		</p>
+	</body>
+</html>

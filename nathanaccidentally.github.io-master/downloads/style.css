@@ -1,0 +1,92 @@
+body {
+	overflow: hidden;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.background {
+	width: 100%;
+	height: 100%;
+	background-image: url("https://s3-us-west-2.amazonaws.com/nathans-site/rose-gold.jpg");
+	-webkit-filter: blur(20px);
+	-moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+    position: fixed;
+    transform: scale(1.1);
+    z-index: -1;
+    left:0;
+    top: 0;
+}
+
+/* That's for the background. Now I'm going to put other stuff below. */
+
+.siteTitle {
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	font-size: 24px;
+	opacity: .8;
+	padding-top: 5px;
+
+    /* Animations */
+
+    -webkit-animation-name: moveTitle;
+    -webkit-animation-duration: 2s;
+}
+
+/* Actual title animation. CSS is cool */
+
+@-webkit-keyframes moveTitle {
+	from {
+		padding-top: 50%;
+		font-size: 48px;
+	} to {
+		padding-top: 5px;
+		font-size: 24px;
+	}
+}
+
+/* because boxes are links */
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+/* done with my site title, time for some stuff. */
+
+.box {
+	border-radius: 13px;
+	display: block;
+	margin: auto;
+	background-color: white;
+	opacity: .9;
+	width: 90%;
+	height: 130px;
+}
+
+/* be sweet and deal with my css */
+
+.box h1 {
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 5%;
+	padding-top: 4%;
+}
+
+.box p {
+	font-size: 12px;
+	margin-left: 5%;
+	width: 90%;
+}
+
+.footer {
+	text-align: center;
+	padding-top: 5%;
+	margin: auto;
+	font-weight: bold;
+	color: white;
+}
+
+/* this was copied from the main page so some stuff is un-utilized. */
