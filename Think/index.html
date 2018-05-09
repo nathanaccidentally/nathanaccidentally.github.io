@@ -41,9 +41,9 @@
 
 			Notification.requestPermission().then(function(permission) { console.log(permission); // Great, now we have notification access! (Hopefully lol)
 
-				window.location.replace(window.location.pathname + window.location.search + window.location.hash);
-
-				hideStartScreen();
+				if (permission == "granted") {
+					hideStartScreen();
+				}
 
 			// Now we need to check if we have permissions.
 
