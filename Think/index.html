@@ -74,6 +74,7 @@
 
 		        document.getElementById("mainInput").disabled = true;
 		        document.getElementById("timeInput").disabled = true;
+		        document.getElementById("postButton").disabled = true;
              }
 
               function checkTime() {
@@ -90,6 +91,7 @@
 
 		                 document.getElementById("mainInput").disabled = false;
 		        		 document.getElementById("timeInput").disabled = false;
+		        		 document.getElementById("postButton").disabled = false;
 		                 clearTimeout(loop);
              		} else {
              		    new Notification('Reminder for ' + time, { body: reminder, icon: 'clock.png',});
