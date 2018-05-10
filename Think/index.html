@@ -9,7 +9,7 @@
 	   if (!("Notification" in window)) {
        alert("Sorry, but your browser may not support the Notifications API. Please try updating your browser or switching to a different one.");
         } else {
-  	   console.log("Setting notifications.")
+  	   console.log("Setting notifications.");
      }
 
      var permission = null;
@@ -57,7 +57,7 @@
              function postReminder() { // This handles putting the reminder box into a variable. (And also some happy text changing and stuff.)
 
              	reminder = document.getElementById("mainInput").value;
-             	setTime = document.getElementById("timeInput").value;
+             	setTime = document.getElementById("timeInput").value.toUpperCase();
              	notif = new Notification("OK, at " + setTime + " I'll remind you to " + reminder);
              	randomBottomBarGoodness();
              	console.log(notif);
@@ -70,6 +70,10 @@
 		        document.getElementById("mainInput").value = "";
 		        document.getElementById("timeInput").value = "";
 		        document.getElementById("mainInput").placeholder = "Reminder already set.";
+		        document.getElementById("timeInput").placeholder = "Done!";
+
+		        document.getElementById("mainInput").disabled = true;
+		        document.getElementById("timeInput").disabled = true;
              }
 
               function checkTime() {
@@ -82,6 +86,10 @@
 			             document.getElementById("mainInput").value = "";
 		                 document.getElementById("timeInput").value = "";
 		                 document.getElementById("mainInput").placeholder = "What should I remind you?";
+		                 document.getElementById("timeInput").placeholder = "When?";
+
+		                 document.getElementById("mainInput").disabled = false;
+		        		 document.getElementById("timeInput").disabled = false;
 		                 clearTimeout(loop);
              		} else {
              		    new Notification('Reminder for ' + time, { body: reminder, icon: 'clock.png',});
@@ -123,7 +131,7 @@
 }
 
 	function randomBottomBarGoodness() {
-		        var bottomBarGoodness = ['did you know: I only allow one reminder at a time because I am lazy?', 'tip: use think frequently', 'tip: sad is for the weak', 'life tip: sleep is for the weak', 'did you know: the code that handles this is the best code on this site', 'tip: enabling notifications is bad'];
+		        var bottomBarGoodness = ['think has beed updated!'];
 	            var randomStringForBottomBar = Math.floor(Math.random()*bottomBarGoodness.length); // Why? For fun!
 	            document.getElementById("bottomBar").innerHTML = bottomBarGoodness[randomStringForBottomBar];
 	}
