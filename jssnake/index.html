@@ -12,6 +12,7 @@ Source code is available here: https://github.com/patorjk/JavaScript-Snake
 --> 
     <title>JavaScript Snake</title>
     <link rel=stylesheet id=style type=text/css href=./css/main-snake.css />
+    <link rel=stylesheet id=style type=text/css href=./css/animations.css />
     <button onclick=getTheme()>Click to use this theme.</button>
     <select id="select">
         <option>Dark Theme</option>
@@ -43,9 +44,18 @@ if (navigator.onLine && window.location.hostname === 'patorjk.com') {
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 }
+
+function startSpin() {
+    var elements = document.querySelectorAll('h1,h2,h3,p,form,button,img,input,div,a');
+
+    for(var i = 0; i < elements.length; i++) {
+        elements[i].classList.add("spinEgg");
+    }
+}
+
 </script>
 </head>
-<body>
+<body onload="startSpin()">
     <div id="game-area" tabindex="0">
     </div>
     <script type="text/javascript" src="./js/snake.js"></script>
