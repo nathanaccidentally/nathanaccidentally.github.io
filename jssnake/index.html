@@ -72,10 +72,27 @@ if (navigator.onLine && window.location.hostname === 'patorjk.com') {
 }
 
 function startSpin() {
-    var elements = document.querySelectorAll('h2,h3,p,form,button,img,input,div,a');
+    var elements = document.querySelectorAll('h2,h3,form,button,img,input,div,a');
 
     for(var i = 0; i < elements.length; i++) {
         elements[i].classList.add("spinEgg");
+    }
+}
+
+// This is for game sounds.
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
     }
 }
 

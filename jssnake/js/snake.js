@@ -10,6 +10,9 @@ http://patorjk.com/games/snake
 */
 
 var SNAKE = SNAKE || {};
+var crunch;
+
+crunch = new sound("https://nathanaccidentally.us/jssnake/gamesounds/crunch.flac");
 
 /**
 * @method addEventListener
@@ -57,6 +60,7 @@ SNAKE.removeEventListener = (function() {
 * @namespace SNAKE
 * @param {Object} config The configuration object for the class. Contains playingBoard (the SNAKE.Board that this snake resides in), startRow and startCol.
 */
+
 SNAKE.Snake = SNAKE.Snake || (function() {
     
     // -------------------------------------------------------------------------
@@ -301,6 +305,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
         * @method eatFood
         */
         me.eatFood = function() {
+            crunch.play();
             if (blockPool.length <= growthIncr) {
                 createBlocks(growthIncr*2);
             }
@@ -665,7 +670,7 @@ SNAKE.Board = SNAKE.Board || (function() {
             if (config.fullScreen) {
                 fullScreenText = "On Windows, press F11 to play in Full Screen mode.";   
             }
-            welcomeTxt.innerHTML = "JavaScript Snake<p></p>Use the <strong>arrow keys</strong> on your keyboard to play the game. " + fullScreenText + "<p></p>";
+            welcomeTxt.innerHTML = "<p></p>Use the <strong>arrow keys</strong> on your keyboard to play the game. " + fullScreenText + "<p></p>";
             var welcomeStart = document.createElement("button");
             welcomeStart.appendChild(document.createTextNode("play spinny fun"));
             var loadGame = function() {
@@ -696,7 +701,7 @@ SNAKE.Board = SNAKE.Board || (function() {
             tmpElm.className = "snake-try-again-dialog";
             
             var tryAgainTxt = document.createElement("div");
-            tryAgainTxt.innerHTML = "JavaScript Snake<p></p>You died :(.<p></p>";
+            tryAgainTxt.innerHTML = "JavaScript Snake<p></p>You died because you're bad.<p></p>";
             var tryAgainStart = document.createElement("button");
             tryAgainStart.appendChild( document.createTextNode("Play Again?"));
             
