@@ -664,7 +664,7 @@ SNAKE.Board = SNAKE.Board || (function() {
             }
             welcomeTxt.innerHTML = "JavaScript Snake<p></p>Use the <strong>arrow keys</strong> on your keyboard to play the game. " + fullScreenText + "<p></p>";
             var welcomeStart = document.createElement("button");
-            welcomeStart.appendChild(document.createTextNode("Play Game"));
+            welcomeStart.appendChild(document.createTextNode("play spinny fun"));
             var loadGame = function() {
                 SNAKE.removeEventListener(window, "keyup", kbShortcut, false);
                 tmpElm.style.display = "none";
