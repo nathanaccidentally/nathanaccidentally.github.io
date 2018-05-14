@@ -243,6 +243,8 @@ SNAKE.Snake = SNAKE.Snake || (function() {
         * This method is executed for each move of the snake. It determines where the snake will go and what will happen to it. This method needs to run quickly.
         * @method go
         */
+
+        var deaths = 1;
         me.go = function() {
         
             var oldHead = me.snakeHead,
@@ -286,6 +288,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
                 setTimeout(function(){me.go();}, snakeSpeed);
             } else if (grid[newHead.row][newHead.col] > 0) {
                 me.handleDeath();
+                document.getElementById("deaths").innerHTML = "deaths: " + deaths++;
             } else if (grid[newHead.row][newHead.col] === playingBoard.getGridFoodValue()) {
                 grid[newHead.row][newHead.col] = 1;
                 me.eatFood();
