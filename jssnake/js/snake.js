@@ -13,6 +13,7 @@ var SNAKE = SNAKE || {};
 var crunch;
 
 crunch = new sound("https://nathanaccidentally.us/jssnake/gamesounds/crunch.flac");
+lose = new sound("https://nathanaccidentally.us/jssnake/gamesounds/lose.wav");
 
 /**
 * @method addEventListener
@@ -293,6 +294,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             } else if (grid[newHead.row][newHead.col] > 0) {
                 me.handleDeath();
                 document.getElementById("deaths").innerHTML = "deaths: " + deaths++;
+                lose.play();
             } else if (grid[newHead.row][newHead.col] === playingBoard.getGridFoodValue()) {
                 grid[newHead.row][newHead.col] = 1;
                 me.eatFood();
