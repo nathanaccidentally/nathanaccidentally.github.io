@@ -294,7 +294,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             } else if (grid[newHead.row][newHead.col] > 0) {
                 me.handleDeath();
                 document.getElementById("deaths").innerHTML = "deaths: " + deaths++;
-                lose.play();
+                // lose.play();
             } else if (grid[newHead.row][newHead.col] === playingBoard.getGridFoodValue()) {
                 grid[newHead.row][newHead.col] = 1;
                 me.eatFood();
