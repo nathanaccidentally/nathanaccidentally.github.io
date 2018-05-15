@@ -1,0 +1,125 @@
+<!DOCTYPE html> 
+<!--<html manifest="snake.appcache">-->
+<head>
+<!--
+
+JavaScript Snake
+By Patrick Gillespie
+http://patorjk.com/games/snake
+
+Source code is available here: https://github.com/patorjk/JavaScript-Snake
+
+-->
+
+<style>
+    .centerBoard {
+         position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    }
+
+    .deaths {
+         position: fixed;
+  top: 95%;
+  left: -50%;
+  transform: translate(-50%, -50%);
+    }
+
+    .compass {
+         position: fixed;
+  top: 95%;
+  right: -50%;
+  transform: translate(-50%, -50%);
+    }
+
+    button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: white;
+}
+
+body {
+    background-color: orange;
+}
+</style>
+
+    <title>JavaScript Snake</title>
+    <link rel=stylesheet id=style type=text/css href=./css/main-snake.css />
+    <link rel=stylesheet id=style type=text/css href=./css/animations.css />
+    <div id="mode-wrapper"><br /><button id="Easy"></button><br /><button id="Medium"></button><br /><button id="Difficult"></button></div>
+
+<script>
+function getTheme () {
+    function changeTheme (Theme) {
+        document.getElementById('style').setAttribute('href', Theme);
+    }
+    var index = document.getElementById("select").selectedIndex;
+    switch (index) {
+        case 0: 
+          changeTheme('css/dark-snake.css');
+          break;
+          case 1: changeTheme('css/main-snake.css');
+    }
+}
+if (navigator.onLine && window.location.hostname === 'patorjk.com') {
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3312460-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+}
+
+function startSpin() {
+    var elements = document.querySelectorAll('h2,h3,form,button,img,input,div,a');
+
+    for(var i = 0; i < elements.length; i++) {
+        elements[i].classList.add("spinEgg");
+    }
+}
+
+// This is for game sounds.
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
+
+</script>
+</head>
+
+<h1 class="deaths" id="deaths">deaths:</h1>
+<img class="compass" src="gameimg/compass.png" width="125px" height="125px">
+
+<body onload="startSpin()" class="centerBoard">
+    <div id="game-area" tabindex="0">
+    </div>
+    <script type="text/javascript" src="./js/snake.js"></script>
+    <script type="text/javascript">
+    var mySnakeBoard = new SNAKE.Board(  {
+                                            boardContainer: "game-area",
+                                            fullScreen: false,
+                                             width: 580,
+                                             height:400
+                                        });
+    </script>
+</body>
+</html>
