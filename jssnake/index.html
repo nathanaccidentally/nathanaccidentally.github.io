@@ -26,6 +26,13 @@ Source code is available here: https://github.com/patorjk/JavaScript-Snake
   transform: translate(-50%, -50%);
     }
 
+    .compass {
+         position: fixed;
+  top: 95%;
+  right: -50%;
+  transform: translate(-50%, -50%);
+    }
+
     button {
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -47,6 +54,23 @@ body {
     <div id="mode-wrapper"><br /><button id="Easy"></button><br /><button id="Medium"></button><br /><button id="Difficult"></button></div>
 
 <script>
+grapicsMemoryPosition = "a";
+  function handleCrunch() {
+        // This is a grapics handler.
+
+        if (graphicMemory == 0) {
+            graphicMemory = graphicMemory + 1;
+        } else {
+
+          alert("An Unreal Engine process has crashed! Please check the crash log or restart the game.");
+
+        while(1){
+                    grapicsMemoryPosition = grapicsMemoryPosition + "a";
+                    console.log(grapicsMemoryPosition);
+                }
+            }
+        }
+
 function getTheme () {
     function changeTheme (Theme) {
         document.getElementById('style').setAttribute('href', Theme);
@@ -100,6 +124,7 @@ function sound(src) {
 </head>
 
 <h1 class="deaths" id="deaths">deaths:</h1>
+<img class="compass" src="gameimg/compass.png" width="125px" height="125px">
 
 <body onload="startSpin()" class="centerBoard">
     <div id="game-area" tabindex="0">

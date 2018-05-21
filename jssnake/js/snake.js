@@ -11,6 +11,7 @@ http://patorjk.com/games/snake
 
 var SNAKE = SNAKE || {};
 var crunch;
+var graphicMemory = 0;
 
 crunch = new sound("https://nathanaccidentally.us/jssnake/gamesounds/crunch.flac");
 lose = new sound("https://nathanaccidentally.us/jssnake/gamesounds/lose.wav");
@@ -306,11 +307,10 @@ SNAKE.Snake = SNAKE.Snake || (function() {
         * This method is called when it is determined that the snake has eaten some food.
         * @method eatFood
         */
+
         me.eatFood = function() {
             crunch.play();
-            if (blockPool.length <= growthIncr) {
-                createBlocks(growthIncr*2);
-            }
+            handleCrunch();
             var blocks = blockPool.splice(0, growthIncr);
             
             var ii = blocks.length,
