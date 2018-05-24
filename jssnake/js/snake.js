@@ -310,7 +310,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 
         me.eatFood = function() {
             crunch.play();
-            handleCrunch();
+            // handleCrunch();
             var blocks = blockPool.splice(0, growthIncr);
             
             var ii = blocks.length,
