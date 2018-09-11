@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<link rel="stylesheet" href="css/style.css">
-		<title>Portal</title>
-
-		<script>
 			var usernames = ["nathang"];
 			var passwords = ["password"];
 
@@ -46,27 +39,9 @@
 function checkLoggedIn() {
 	var name = readCookie('username');
 
-	if (usernames.indexOf(name) !== -1) {
+	if (usarnames.indexOf(name) !== -1) {
 		console.log("output");
 	} else {
 		console.log("no output");
 	}
 }
-		</script>
-	</head>
-
-	<body>
-		<div class="login">
-			<h1>login</h1>
-			<p id="subtext">use your moderator credentials to login to the portal</p>
-
-			<b><p>username:</p></b>
-  			<input id="username" type="text" name="username" value="">
-
-  			<b><p>password:</p></b>
-  			<input id="password" type="text" name="password" value="">
-
-  			<input onClick="login()" type="submit" value="login">
-		</div>
-	</body>
-</html>
