@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>fanta pew pew</title>
+
+		<script>
+			function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function checkLoggedIn() {
+	var name = readCookie('username');
+
+	if (usernames.indexOf(name) !== -1) {
+		window.location.href = "steam://connect/70.113.14.95:27015";
+	} else {
+		console.log("no output");
+	}
+}
+		</script>
+	</head>
+
+	<body onload="checkLoggedIn*("></body>
+</html>
