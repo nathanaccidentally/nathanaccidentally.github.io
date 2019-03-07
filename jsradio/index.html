@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jsradio</title>
+
+		<style>
+			body {
+				font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter , monospace;
+			}
+
+			.div1 {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 400px;
+				height: 100px;
+				text-align: center;
+				color: black;
+			}
+
+			/* need to hide stuff at first */
+
+			.div2 {
+				display: none;
+			}
+
+			.div3 {
+				display: none;
+			}
+
+			.div4 {
+				display: none;
+				position: absolute;
+				bottom: 0;
+			}
+
+			.div5 {
+				display: none;
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+		</style>
+
+		<script src="moment/moment.js"></script>
+		<script src="howler/howler.js"></script>
+
+		<script>
+			// this project uses moment.js to pull time and howler.js to play sounds.
+			// there needs to be two 12 hour files so they can be loaded separatley.
+
+			var mmt = moment();
+			var mmtMidnight = mmt.clone().startOf('day'); // get midnight time
+			var diffSeconds = mmt.diff(mmtMidnight, 'seconds');
+			var radioSrc = "https://s3.amazonaws.com/jsradiostream/gtalossantos.mp3";
+
+			if (diffSeconds < 43200) {
+				console.log("loading radio1");
+			} else {
+				window.diffSeconds = diffSeconds - 43200;
+				console.log("loading radio2");
+			}
+
+			// hide start screen when u click the button
+
+			function hidestart() {
+				document.getElementById("div1").style.display = 'none';
+
+				// && i also have to show the stuff under
+
+				document.getElementById("div2").style.display = 'block';
+				document.getElementById("div3").style.display = 'block';
+				document.getElementById("div4").style.display = 'block';
+				document.getElementById("div5").style.display = 'block';
+
+				startRadio();
+			}
+
+			// now we have to get the time and play music in sync
+			// I need to find the difference in time from 12pm (when ill start the radio) and the current time
+
+			function startRadio() {
+				var radio = new Howl({
+					src: [radioSrc]
+				}); 
+
+				// once the radio file is loaded, play it with howler.
+
+				radio.once('load', function() {
+					radio.seek(diffSeconds)
+					radio.play();
+
+					document.getElementById("text2").innerHTML = "now playing: " + radioSrc;
+					document.getElementById("timeDisplay").innerHTML = "stream id: " + diffSeconds;
+				})
+			}
+		</script>
+	</head>
+
+	<body>
+		<div class="div1" id="div1">
+			<p id="text">howdy and welcome to my radio website. to start listening click the button below.</p><br><br>
+			<a href="#" onclick="hidestart()">[start listening]</a>
+		</div>
+
+		<div class="div2" id="div2">
+			<p>jsradio - build 1bdf56b4</p>
+		</div>
+
+		<div class="div3" id="div3">
+			<p id="text2"></p>
+		</div>
+
+		<div class="div4" id="div4">
+			<p id=timeDisplay>downloading assets...</p>
+			<p>please be paitent when starting jsradio, it could take a minute or two to load.</p>
+		</div>
+
+		<div class="div5" id="div5">
+			<a href="https://github.com/nathanaccidentally/jsradio">github</a>
+			<a href="#" onclick="Howler.unload()">unload cache</a>
+		</div>
+	</body>
+</html>
