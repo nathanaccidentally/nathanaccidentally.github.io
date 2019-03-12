@@ -48,19 +48,28 @@
 
 		<script>
 			// this project uses moment.js to pull time and howler.js to play sounds.
-			// there needs to be two 12 hour files so they can be loaded separatley.
+			// there needs to be four 6 hour files so they can be loaded separatley. (as opposed to 12 hour files because theyre hard to store and stream)
 
 			var mmt = moment();
 			var mmtMidnight = mmt.clone().startOf('day'); // get midnight time
 			var diffSeconds = mmt.diff(mmtMidnight, 'seconds');
 			var radioSrc = "https://s3.amazonaws.com/jsradiostream/gtalossantos.mp3";
 
-			if (diffSeconds < 43200) {
-				console.log("loading radio1");
+			if (diffSeconds < 21600) { // if its before 6am
+				console.log("loading radio file");
+			} else if (diffSeconds > 21600 && diffSeconds < 43200) { // if the time is between 6am and 12pm
+				window.diffSeconds = diffSeconds - 21600; // subtract 6 hours from the time
+				console.log("loading radio file");
+			} else if (diffSeconds > 43200 && diffSeconds < 64800) { // if time is after 12pm but before 6pm
+				window.diffSeconds = diffSeconds - 43200; // subtract time passed up until current time
+				console.log("loading radio file");
+			} else if (diffSeconds > 64800) { // if time is past 6pm 
+				window.diffSeconds = diffSeconds - 64800;
 			} else {
-				window.diffSeconds = diffSeconds - 43200;
-				console.log("loading radio2");
+				// what the fuck??
 			}
+
+			console.log(diffSeconds + " is the ammount of time in seconds that have passed since the last 6 hour long time block");
 
 			// hide start screen when u click the button
 
@@ -83,7 +92,7 @@
 			function startRadio() {
 				var radio = new Howl({
 					src: [radioSrc]
-				}); 
+				});
 
 				// once the radio file is loaded, play it with howler.
 
