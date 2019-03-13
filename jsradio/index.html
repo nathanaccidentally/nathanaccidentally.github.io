@@ -45,34 +45,9 @@
 
 		<script src="moment/moment.js"></script>
 		<script src="howler/howler.js"></script>
+		<script src="jsync/jsync.js"></script>
 
 		<script>
-			// this project uses moment.js to pull time and howler.js to play sounds.
-			// there needs to be four 6 hour files so they can be loaded separatley. (as opposed to 12 hour files because theyre hard to store and stream)
-
-			var mmt = moment();
-			var mmtMidnight = mmt.clone().startOf('day'); // get midnight time
-			var diffSeconds = mmt.diff(mmtMidnight, 'seconds');
-			var radioSrc = "https://s3.amazonaws.com/jsradiostream/gtalossantos.mp3";
-
-			if (diffSeconds < 21600) { // if its before 6am
-				console.log("loading radio file");
-			} else if (diffSeconds > 21600 && diffSeconds < 43200) { // if the time is between 6am and 12pm
-				window.diffSeconds = diffSeconds - 21600; // subtract 6 hours from the time
-				console.log("loading radio file");
-			} else if (diffSeconds > 43200 && diffSeconds < 64800) { // if time is after 12pm but before 6pm
-				window.diffSeconds = diffSeconds - 43200; // subtract time passed up until current time
-				console.log("loading radio file");
-			} else if (diffSeconds > 64800) { // if time is past 6pm 
-				window.diffSeconds = diffSeconds - 64800;
-			} else {
-				// what the fuck??
-			}
-
-			console.log(diffSeconds + " is the ammount of time in seconds that have passed since the last 6 hour long time block");
-
-			// hide start screen when u click the button
-
 			function hidestart() {
 				document.getElementById("div1").style.display = 'none';
 
@@ -83,26 +58,7 @@
 				document.getElementById("div4").style.display = 'block';
 				document.getElementById("div5").style.display = 'block';
 
-				startRadio();
-			}
-
-			// now we have to get the time and play music in sync
-			// I need to find the difference in time from 12pm (when ill start the radio) and the current time
-
-			function startRadio() {
-				var radio = new Howl({
-					src: [radioSrc]
-				});
-
-				// once the radio file is loaded, play it with howler.
-
-				radio.once('load', function() {
-					radio.seek(diffSeconds)
-					radio.play();
-
-					document.getElementById("text2").innerHTML = "now playing: " + radioSrc;
-					document.getElementById("timeDisplay").innerHTML = "stream id: " + diffSeconds;
-				})
+				jsync("https://s3.amazonaws.com/jsradiostream/gtalossantos.mp3");
 			}
 		</script>
 	</head>
@@ -122,7 +78,6 @@
 		</div>
 
 		<div class="div4" id="div4">
-			<p id=timeDisplay>downloading assets...</p>
 			<p>please be paitent when starting jsradio, it could take a minute or two to load.</p>
 		</div>
 
